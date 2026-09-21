@@ -94,38 +94,38 @@ export default function Dashboard() {
 
   return (
     <AppLayout>
-      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div className="min-w-0">
-          <h2 className="text-2xl font-serif font-semibold">Welcome back, {firstName}!</h2>
-          <p className="text-sm text-ink/60">
+          <h2 className="text-xl font-serif font-semibold sm:text-2xl">Welcome back, {firstName}!</h2>
+          <p className="max-w-2xl text-sm text-ink/60">
             Here's an overview of your partner relationships and activities.
           </p>
         </div>
-        <p className="text-sm text-ink/50">
+        <p className="text-xs text-ink/50 sm:text-sm">
           {new Date().toLocaleDateString('en-ZA', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
         </p>
       </div>
 
       {/* Top stat row */}
-      <div className="flex flex-wrap gap-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4 xl:gap-4">
         {MOCK_STATS.map((s) => (
-          <div key={s.label} className="min-w-0 flex-1 basis-full sm:basis-[calc(50%-0.5rem)] lg:basis-0">
+          <div key={s.label} className="min-w-0">
             <IconStatCard {...s} />
           </div>
         ))}
       </div>
 
       {/* Partner types / engagements over time / relationship health */}
-      <div className="mt-6 flex flex-wrap gap-6">
-        <div className="min-w-0 flex-1 basis-full rounded-xl border border-line bg-white p-5 lg:basis-0">
-          <h3 className="mb-4 font-serif text-lg">Partner Types</h3>
+      <div className="mt-5 grid min-w-0 grid-cols-1 gap-5 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.35fr)_minmax(0,0.9fr)]">
+        <div className="min-w-0 rounded-xl border border-line bg-white p-4 sm:p-5">
+          <h3 className="mb-3 font-serif text-lg">Partner Types</h3>
           <DonutChart data={PARTNER_TYPES} centerLabel="Partners" centerValue={48} />
         </div>
 
-        <div className="min-w-0 flex-1 basis-full rounded-xl border border-line bg-white p-5 lg:basis-0">
-          <div className="mb-2 flex items-center justify-between">
+        <div className="min-w-0 rounded-xl border border-line bg-white p-4 sm:p-5">
+          <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
             <h3 className="font-serif text-lg">Engagements Over Time</h3>
-            <select className="rounded border border-line bg-paper px-2 py-1 text-xs">
+            <select aria-label="Engagement period" className="rounded border border-line bg-paper px-2 py-1 text-xs">
               <option>Last 6 months</option>
               <option>Last 12 months</option>
             </select>
@@ -133,8 +133,8 @@ export default function Dashboard() {
           <TrendLineChart data={ENGAGEMENT_TRENDS} lines={ENGAGEMENT_LINES} />
         </div>
 
-        <div className="min-w-0 flex-1 basis-full rounded-xl border border-line bg-white p-5 lg:basis-0">
-          <h3 className="mb-4 font-serif text-lg">Relationship Health</h3>
+        <div className="min-w-0 rounded-xl border border-line bg-white p-4 sm:p-5">
+          <h3 className="mb-3 font-serif text-lg">Relationship Health</h3>
           <div className="flex justify-center">
             <DonutChart
               data={[
@@ -145,11 +145,11 @@ export default function Dashboard() {
               centerValue="78%"
             />
           </div>
-          <ul className="mt-6 space-y-3 text-xl">
+          <ul className="mt-4 space-y-3 text-sm sm:text-base">
             {HEALTH_BREAKDOWN.map((h) => (
               <li key={h.label} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
-                <span className="flex min-w-0 items-center gap-3 text-ink/70">
-                  <span className="inline-block h-3 w-3 rounded-full bg-ink/20" />
+                <span className="flex min-w-0 items-center gap-2 text-ink/70">
+                  <span className="inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-ink/20" />
                   <span className="min-w-0 break-words">{h.label}</span>
                 </span>
                 <span className="font-medium text-ink/70 whitespace-nowrap">{h.count}</span>
@@ -160,9 +160,9 @@ export default function Dashboard() {
       </div>
 
       {/* Recent engagements + top partners */}
-      <div className="mt-6 flex flex-wrap gap-6">
-        <section className="min-w-0 flex-1 basis-full rounded-xl border border-line bg-white p-5 lg:basis-0">
-          <div className="mb-3 flex items-center justify-between">
+      <div className="mt-5 grid min-w-0 grid-cols-1 gap-5 xl:grid-cols-2">
+        <section className="min-w-0 rounded-xl border border-line bg-white p-4 sm:p-5">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
             <h3 className="font-serif text-lg">Recent Engagements</h3>
             <a href="/engagements" className="text-sm text-accent hover:underline">View all</a>
           </div>
@@ -180,8 +180,8 @@ export default function Dashboard() {
           </div>
         </section>
 
-        <section className="min-w-0 flex-1 basis-full rounded-xl border border-line bg-white p-5 lg:basis-0">
-          <div className="mb-3 flex items-center justify-between">
+        <section className="min-w-0 rounded-xl border border-line bg-white p-4 sm:p-5">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
             <h3 className="font-serif text-lg">Top Partners by Relationship Health</h3>
             <a href="/organisations" className="text-sm text-accent hover:underline">View all</a>
           </div>
@@ -207,13 +207,14 @@ export default function Dashboard() {
       </div>
 
       {/* Recent opportunities + quick stats/tasks */}
-      <div className="mt-6 flex flex-wrap gap-6">
-        <section className="min-w-0 flex-1 basis-full rounded-xl border border-line bg-white p-5 lg:basis-[calc(66.666%-0.75rem)]">
-          <div className="mb-3 flex items-center justify-between">
+      <div className="mt-5 grid min-w-0 grid-cols-1 gap-5 xl:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)]">
+        <section className="min-w-0 rounded-xl border border-line bg-white p-4 sm:p-5">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
             <h3 className="font-serif text-lg">Recent Opportunities</h3>
             <a href="/opportunities" className="text-sm text-accent hover:underline">View all</a>
           </div>
-          <table className="w-full text-sm">
+          <div className="hidden overflow-x-auto md:block">
+            <table className="w-full min-w-[640px] text-sm">
             <thead className="text-left text-xs uppercase tracking-wide text-ink/40">
               <tr>
                 <th className="pb-2 font-medium">Opportunity</th>
@@ -234,11 +235,26 @@ export default function Dashboard() {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
+          <div className="divide-y divide-line md:hidden">
+            {RECENT_OPPORTUNITIES.map((o) => (
+              <div key={o.title} className="space-y-2 py-3 text-sm">
+                <div className="flex items-start justify-between gap-3">
+                  <p className="min-w-0 font-medium">{o.title}</p>
+                  <Badge tone={STAGE_TONE[o.stage] || 'neutral'}>{o.stage}</Badge>
+                </div>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-ink/60">
+                  <span className="font-medium text-ink/80">{o.value}</span>
+                  <span>Close: {o.close}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
-        <div className="min-w-0 flex-1 basis-full space-y-6 lg:basis-[calc(33.333%-0.75rem)]">
-          <section className="rounded-xl border border-line bg-white p-5">
+        <div className="min-w-0 space-y-5">
+          <section className="rounded-xl border border-line bg-white p-4 sm:p-5">
             <h3 className="mb-3 font-serif text-lg">Quick Stats</h3>
             <ul className="space-y-3">
               {QUICK_STATS.map((q) => (
@@ -255,8 +271,8 @@ export default function Dashboard() {
             </ul>
           </section>
 
-          <section className="rounded-xl border border-line bg-white p-5">
-            <div className="mb-3 flex items-center justify-between">
+          <section className="rounded-xl border border-line bg-white p-4 sm:p-5">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
               <h3 className="font-serif text-lg">Upcoming Tasks</h3>
               <a href="/tasks" className="text-sm text-accent hover:underline">View all</a>
             </div>
